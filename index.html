@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BO2518 - Automate all the things | Red Hat Summit 2026</title>
+
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css" />
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css" />
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/monokai.css" />
+  <link rel="stylesheet" href="theme.css" />
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+  <!-- ============================================================
+       SLIDE 01 — Title
+       ============================================================ -->
+  <section class="slide-title">
+
+    <p class="section-label">BO2518 &middot; Red Hat Summit 2026</p>
+    <h1>Automate all the things</h1>
+    <p class="subtitle">How Bancolombia scaled across mainframes, databases, and security</p>
+    <div class="speakers">
+      <p><strong>Leonardo Gallego</strong> &middot; Senior Technical Marketing Manager, Red Hat</p>
+      <p><strong>Juan Esteban</strong> &middot; <strong>Juan David</strong> &middot; <strong>Emanuel</strong> &middot; Bancolombia</p>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~1 min]
+
+      "Good morning/afternoon everyone, welcome. I'm Leonardo Gallego, Senior Technical Marketing Manager at Red Hat, focused on Ansible Automation Platform.
+
+      With me today from Bancolombia are Juan Esteban, Juan David, and Emanuel.
+
+      Today we're going to show you how Bancolombia took Ansible Automation Platform beyond the basics and scaled it across domains that most organizations haven't touched yet -- mainframes, cloud databases, and proactive security remediation.
+
+      This isn't a theoretical talk. Everything you'll see today is running in production."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 02 — Industry Context
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Setting the Stage</p>
+    <h2>Industry Context</h2>
+    <ul>
+      <li class="fragment">Vulnerability exploitation is a <strong>growing breach vector</strong></li>
+      <li class="fragment">Patching challenges <strong>amplified in regulated industries</strong></li>
+      <li class="fragment">Shrinking window between <strong>disclosure and exploitation</strong></li>
+      <li class="fragment">Remediation timelines still measured in <strong>weeks</strong></li>
+      <li class="fragment">The question: how to automate at scale,<br>across heterogeneous infrastructure, <strong>without breaking things</strong></li>
+    </ul>
+
+    <aside class="notes">
+      [Leonardo, ~1.5 min]
+
+      "Let me set the stage with why this matters right now.
+
+      Vulnerability exploitation continues to grow as an initial breach vector. In regulated industries like banking, the window between a vulnerability being disclosed and it being exploited is shrinking. But the window between disclosure and remediation? In most organizations, that's still measured in weeks -- sometimes months.
+
+      Many organizations still struggle with slow patch deployment due to siloed processes and resource constraints. In banking, where you're dealing with regulatory requirements, compliance audits, and systems that can't go down -- the challenge is even harder.
+
+      The question isn't whether to automate. It's how to automate at scale, across heterogeneous infrastructure, without breaking things. That's what Bancolombia figured out."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 03 — Bancolombia Overview
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Setting the Stage</p>
+    <h2>Bancolombia at a Glance</h2>
+    <div class="two-col">
+      <div class="col">
+        <h3><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg> Scale</h3>
+        <ul>
+          <li>Top 20 financial institution in Latin America</li>
+          <li>Headquartered in Medell&iacute;n, Colombia</li>
+          <li><strong>30,000+</strong> employees</li>
+          <li><strong>29M+</strong> customers</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3><svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01M12 3v6M12 15v6"/></svg> Infrastructure</h3>
+        <ul>
+          <li>RHEL, Windows, IBM iSeries, AWS</li>
+          <li>Nutanix, VMware, Azure DevOps, Dell EMC, IBM</li>
+          <li><strong>900+</strong> playbooks in production</li>
+          <li><strong>170,000+</strong> automated executions monthly</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~1.5 min]
+
+      "For those who don't know Bancolombia -- headquartered in Medellin, Colombia. Over 30,000 employees serving more than 29 million customers. One of the top 20 banks in Latin America.
+
+      What makes their automation story interesting isn't just the scale -- it's the diversity. They're running RHEL, Windows, IBM iSeries, AWS cloud workloads. They integrate with Nutanix, VMware, Azure DevOps, Dell EMC, IBM -- the full spectrum of enterprise infrastructure.
+
+      Today they have over 900 playbooks in production and more than 170,000 automated executions every month. But the number that matters most isn't the playbook count -- it's the breadth of teams using automation as their default way of working."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 04 — Maturity Journey
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Setting the Stage</p>
+    <h2>Automation Maturity Journey</h2>
+    <div class="timeline">
+      <div class="event fragment">
+        <div class="year">2020</div>
+        <div class="desc">Proof of concept &middot; Siloed tests across different teams</div>
+      </div>
+      <div class="event fragment">
+        <div class="year">2023</div>
+        <div class="desc">iSeries and cloud workloads onboarded</div>
+      </div>
+      <div class="event fragment">
+        <div class="year">2024</div>
+        <div class="desc">Governance model established</div>
+      </div>
+      <div class="event fragment">
+        <div class="year">2025</div>
+        <div class="desc">New AAP deployment + regional expansion</div>
+      </div>
+      <div class="event fragment">
+        <div class="year">2026</div>
+        <div class="desc"><strong>Level 4 &mdash; Institutionalized</strong> &middot; Organization-centric, automation-first</div>
+      </div>
+    </div>
+    <p class="fragment" style="margin-top: 0.5em; font-size: 0.8em; color: var(--rh-gold);">
+      &#9889; The engine: <strong>Automation Community of Practice</strong>
+    </p>
+
+    <aside class="notes">
+      [Leonardo, ~1.5 min]
+
+      "If you're familiar with the automation maturity model -- there are five levels, from Aware all the way to Optimized.
+
+      Bancolombia started in 2020 with siloed proofs of concept. Over the next few years they onboarded iSeries, cloud workloads, established governance, and deployed AAP 2.5. The key accelerator was the Automation Community of Practice -- an open, voluntary group that broke down silos between teams, established shared standards, and created a culture where automation knowledge flows across the organization.
+
+      Today they're approaching Level 4, Institutionalized -- automation-first across the organization. None of what you're about to see happened in a silo. It was driven by that community."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 05 — Session Roadmap
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Setting the Stage</p>
+    <h2>3 Use Cases Today</h2>
+    <div class="roadmap">
+      <div class="card red">
+        <svg class="card-icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v5c0 5.25-3.5 9.74-7 11-3.5-1.26-7-5.75-7-11V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>1. VulSolver</h3>
+        <p>Automated security patching at scale</p>
+        <p>Onboarding + scheduled windows + AAP + reporting</p>
+        <p style="margin-top: 0.5em; color: var(--rh-gray-light); font-weight: 500;">Speaker: Juan Esteban</p>
+      </div>
+      <div class="card blue">
+        <svg class="card-icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M20 5v6c0 1.66-3.58 3-8 3s-8-1.34-8-3V5"/><path d="M20 11v6c0 1.66-3.58 3-8 3s-8-1.34-8-3v-6"/></svg>
+        <h3>2. Database &amp; Cloud</h3>
+        <p>24/7 DB discovery and inventory management</p>
+        <p>AWS EC2 scanning + CMDB validation</p>
+        <p style="margin-top: 0.5em; color: var(--rh-gray-light); font-weight: 500;">Speaker: Juan David</p>
+      </div>
+      <div class="card green">
+        <svg class="card-icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/><path d="M16 12v4h4"/></svg>
+        <h3>3. Hidra</h3>
+        <p>IBM iSeries mainframe integration</p>
+        <p>Legacy systems + modern CI/CD pipelines</p>
+        <p style="margin-top: 0.5em; color: var(--rh-gray-light); font-weight: 500;">Speaker: Emanuel</p>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~0.5 min]
+
+      "Today we're going to deep dive into three use cases that show what automation maturity looks like in practice.
+
+      First, Juan Esteban will walk you through VulSolver -- an update from a presentation they gave here last year on automated remediation with Event-Driven Ansible. This year, the focus is on their full security patching workflow, from server onboarding through scheduled patch windows to reporting.
+
+      Then Juan David will show you how they run 24/7 discovery playbooks to find database services across their AWS EC2 infrastructure.
+
+      And Emanuel will show you how they integrated IBM iSeries mainframes with modern CI/CD pipelines.
+
+      I'll wrap up with the patterns that made all of this work -- and a blueprint you can take home and start applying on Monday.
+
+      Juan Esteban, take it away."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 06 — VulSolver Divider
+       ============================================================ -->
+  <section class="slide-divider">
+
+    <h2>Vulnerability Scanning<br>&amp; Remediation</h2>
+    <p class="divider-subtitle">Use Case 1 &middot; VulSolver &middot; Juan Esteban</p>
+
+    <aside class="notes">
+      [TRANSITION — Leonardo to Juan Esteban]
+
+      "Our first use case tackles one of the biggest challenges in enterprise security: vulnerability remediation at scale. Bancolombia built a system called VulSolver that turns vulnerability detection into automated remediation -- from weeks to minutes. Juan Esteban, walk us through how VulSolver works."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 07 — Problem Security
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">VulSolver &middot; Problem</p>
+    <h2>Addressing the Exposure Window at Scale</h2>
+    <ul>
+      <li class="fragment">Growing number of <strong>critical vulnerabilities</strong></li>
+      <li class="fragment"><strong>Long-lived exposure windows</strong></li>
+      <li class="fragment"><strong>400+ teams</strong> managing application security issues</li>
+      <li class="fragment">Negative impact on <strong>time to market</strong></li>
+    </ul>
+
+    <aside class="notes">
+      [Juan Esteban, ~1.5 min]
+
+      "Let me take you back to what vulnerability management looked like at Bancolombia before VulSolver.
+
+      We had a growing number of critical vulnerabilities across our infrastructure and applications, including systems critical to the organization. Exposure windows were long-lived -- days, sometimes weeks. With over 400 teams involved in vulnerability closure, this fragmentation made it very difficult to maintain constant visibility and control.
+
+      Security was reactive instead of proactive, with a negative impact on time to market and high operational risk. We knew we had to transform our approach."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 08 — VulSolver Architecture
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">VulSolver</p>
+    <h2>VulSolver Workflow</h2>
+    <div class="flow fragment">
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7h8M8 11h5M8 15h8"/></svg>
+        <span class="step-label">Onboard Servers</span>
+        <small>Register &amp; enroll</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span class="step-label">Schedule Windows</span>
+        <small>Automated patch windows</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v5c0 5.25-3.5 9.74-7 11-3.5-1.26-7-5.75-7-11V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span class="step-label">Security Patching</span>
+        <small>Automated via AAP</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v14H3z"/><path d="M8 21h8M12 17v4M7 7h3M7 11h5"/></svg>
+        <span class="step-label">Report &amp; Dashboard</span>
+        <small>Results &amp; awareness</small>
+      </div>
+    </div>
+    <p class="fragment" style="font-size: 0.75em; color: var(--rh-green); margin-top: 1em;">
+      <strong>Zero human intervention</strong> for onboarded cases &middot;
+      No tickets &middot; No manual scheduling &middot; No waiting
+    </p>
+
+    <!-- TODO: Replace this placeholder with final VulSolver workflow diagram -->
+    <aside class="notes">
+      [Juan Esteban, ~2 min]
+
+      "This is the VulSolver workflow -- it manages the complete vulnerability closure process.
+
+      First, teams enroll in the solution to define their maintenance windows and ensure that when a machine requires a reboot, it happens after the patching process. That information is registered in a central database to control the automation. Then there's a daily assessment of which vulnerabilities are present on enrolled servers to measure remediation effectiveness.
+
+      Next, workflows execute automatically based on approved change processes. The remediation actions have three parts: first, recovery points through Veeam and VMware Snapshots to ensure safe rollback if needed. Then a vulnerability scan and notification before the patching process. The patching itself runs automatically, and finally the status is reported back to the teams.
+
+      All activities are stored for traceability and event correlation. Results are published on a dashboard so teams have full visibility of their vulnerabilities and the remediation actions taken, centralized in a single point of information.
+
+      The key here is the full loop -- all automated. No tickets, no manual scheduling, no waiting."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 09 — VulSolver Success
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">VulSolver &middot; Success</p>
+    <h2>Evolution of the VulSolver Platform</h2>
+    <div class="comparison">
+      <div class="before">
+        <h3>Last Year</h3>
+        <ul>
+          <li>Enrolled servers into Red Hat Insights</li>
+          <li><strong>300 servers</strong> (RHEL only)</li>
+          <li>Security issues trigger automation</li>
+          <li>CVE remediation through AAP</li>
+          <li>Metrics and visibility</li>
+        </ul>
+      </div>
+      <div class="after">
+        <h3>Now</h3>
+        <ul>
+          <li><strong>2,500+ servers</strong></li>
+          <li>Recovery points</li>
+          <li>Multiplatform: Linux + Windows</li>
+          <li>Notification alerts</li>
+          <li>Customized playbooks</li>
+          <li>Service health validation</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Juan Esteban, ~1.5 min]
+
+      "Here's the evolution of VulSolver.
+
+      Last year we started by enrolling servers into Red Hat Insights -- 300 RHEL servers. Security issues would trigger automation, CVE remediation ran through Ansible Automation Platform, and we built metrics and visibility.
+
+      Now? Over 2,500 servers. We've added recovery points, multiplatform remediation across both Linux and Windows, notification alerts, customized playbooks per CVE type, and service health validation after remediation.
+
+      The key shift: from reactive patching to a proactive, automated loop."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 10 — VulSolver Achievements
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">VulSolver &middot; Achievements</p>
+    <h2>Security Posture and Financial Impact</h2>
+    <div class="metrics">
+      <div class="metric fragment"><div class="value">$4M+</div><div class="label">Risk Reduction</div></div>
+      <div class="metric gold fragment"><div class="value">$8.4M</div><div class="label">Calculated Savings</div></div>
+      <div class="metric green fragment"><div class="value">82%</div><div class="label">Vulnerability Reduction<br>on enrolled servers</div></div>
+      <div class="metric blue fragment"><div class="value">60%</div><div class="label">Automation Rate<br>no human intervention</div></div>
+      <div class="metric fragment"><div class="value">40%</div><div class="label">Operational Efficiency<br>across 480+ teams</div></div>
+    </div>
+
+    <aside class="notes">
+      [Juan Esteban, ~1.5 min]
+
+      "Let me show you the impact.
+
+      Estimated savings: over 4 million dollars in risk reduction, plus 8.4 million in calculated savings.
+
+      On hardening: 82% reduction in vulnerabilities on enrolled servers.
+
+      Automation rate: 60% of issues resolved without human intervention across all servers.
+
+      And operational efficiency: 40% improvement across 480+ IT teams involved in issue remediation.
+
+      These results demonstrate that VulSolver is not only measurable in terms of risk reduction, but also cost-efficient and operationally efficient.
+
+      This didn't start big. The first version handled one type of advisory on a small group of RHEL systems. Start small, prove value, scale."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 11 — Database Divider
+       ============================================================ -->
+  <section class="slide-divider">
+
+    <h2>Database &amp; Cloud<br>Configuration</h2>
+    <p class="divider-subtitle">Use Case 2 &middot; Juan David</p>
+
+    <aside class="notes">
+      [TRANSITION — Juan Esteban to Juan David]
+
+      "Thank you Juan Esteban. Our second use case is a completely different domain -- same platform, completely different challenge. Managing configuration and inventory across thousands of cloud instances and databases. Juan David, tell us how your team tackled this."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 12 — Problem Database
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Database &amp; Cloud &middot; Problem</p>
+    <h2>The Challenge of Cloud Database Discovery</h2>
+    <ul>
+      <li class="fragment">Challenges in tracking <strong>database services running on EC2</strong></li>
+      <li class="fragment"><strong>Dynamic AWS environment</strong> &mdash; instances come and go</li>
+      <li class="fragment">Suboptimal <strong>database licensing efficiency</strong></li>
+      <li class="fragment">Bad practices on <strong>database management</strong> &mdash; no automated enforcement</li>
+    </ul>
+
+    <aside class="notes">
+      [Juan David, ~1.5 min]
+
+      "Bancolombia is a company where autonomy is a keyword. Technology teams deploy infrastructure through infrastructure as code, which is great -- but this autonomous approach creates a major challenge for database teams: maintaining an up-to-date inventory of databases implemented in the AWS cloud.
+
+      We need this inventory to control database licensing, to track vulnerabilities on database services, and to ensure baseline compliance. Our AWS environment is dynamic -- instances come and go. Without accurate tracking, we couldn't optimize any of those. We found in Ansible a very powerful tool to solve this challenge automatically."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 13 — Database Success
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Database &amp; Cloud &middot; Success</p>
+    <h2>Continuous Discovery and CMDB Integration</h2>
+    <ul>
+      <li><strong>Database Inventory Management</strong> using AWS and Ansible</li>
+      <li><strong>24/7 discovery playbooks</strong> scanning AWS EC2 infrastructure continuously</li>
+      <li>Detect DB services: <strong>Oracle, MS SQL Server, PostgreSQL</strong> and others across multiple OSes</li>
+      <li><strong>Automated playbooks</strong> for database tagging and validation</li>
+    </ul>
+    <div class="flow" style="margin-top: 1em;">
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12a10 10 0 11-5-8.66"/><circle cx="12" cy="12" r="3"/><path d="M17 3l2 2-2 2"/></svg>
+        <span class="step-label">AWS EC2</span>
+        <small>24/7 instance scanning</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        <span class="step-label">AAP Workflow</span>
+        <small>Tag validation</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M20 5v6c0 1.66-3.58 3-8 3s-8-1.34-8-3V5"/><path d="M20 11v6c0 1.66-3.58 3-8 3s-8-1.34-8-3v-6"/></svg>
+        <span class="step-label">DB Discovery</span>
+        <small>Oracle, MS SQL Server, others</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg>
+        <span class="step-label">BMC Helix</span>
+        <small>CMDB sync</small>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Juan David, ~2 min]
+
+      "The use case we implemented in Ansible runs on an automatic schedule -- several times a day, every day of the week.
+
+      The playbooks traverse all EC2 instances in AWS using dynamic inventories, searching for database services -- Oracle, MS SQL Server, PostgreSQL, and others -- running across both Linux and Windows hosts. After this traversal, each instance is categorized depending on the database engine and tagged to identify it more easily in our team's inventories.
+
+      The same platform, the same standards -- completely different domain."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 14 — Database Achievements
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Database &amp; Cloud &middot; Achievements</p>
+    <h2>Efficiency Gains in Database Management</h2>
+    <div class="metrics">
+      <div class="metric fragment"><div class="value">96%</div><div class="label">Execution Time<br>reduced through automation</div></div>
+      <div class="metric green fragment"><div class="value">100%</div><div class="label">Automation Rate<br>fully end-to-end, zero human intervention</div></div>
+      <div class="metric blue fragment"><div class="value">12%</div><div class="label">Operational Efficiency<br>across database specialist team</div></div>
+    </div>
+    <div class="fragment" style="margin-top: 1em; background: var(--rh-gray-light); border-left: 5px solid var(--rh-red); padding: 20px 28px; border-radius: 0 4px 4px 0;">
+      <span style="font-family: 'Red Hat Display', sans-serif; font-size: 1.1em; font-weight: 700; color: var(--rh-dark);">10 days</span>
+      <span style="font-size: 0.85em; color: var(--rh-gray);"> of manual, error-prone work &mdash; fully automated, zero errors</span>
+    </div>
+
+    <aside class="notes">
+      [Juan David, ~1 min]
+
+      "The results speak for themselves.
+
+      96% reduction in execution time. Previously, when done manually, this process was taking up to 10 days. By fully automating it, we've gotten it down to around 4 hours total for the discovery and inventory. 100% automation rate -- no human intervention. The process runs automatically throughout the week, giving us real-time database information that was much harder to get before. And 12% operational efficiency gain across the database specialist team, which allowed us to focus those people on other activities -- including upcoming work on AI and user management.
+
+      That 100% is worth pausing on. Every step from discovery to validation to CMDB update runs without a human touching it."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 15 — Hidra Divider
+       ============================================================ -->
+  <section class="slide-divider">
+
+    <h2>Mainframe Integration<br>(IBM iSeries)</h2>
+    <p class="divider-subtitle">Use Case 3 &middot; Hidra &middot; Emanuel</p>
+
+    <aside class="notes">
+      [TRANSITION — Juan David to Emanuel]
+
+      "Thank you Juan David. Now for something most people think can't be automated -- mainframes. Emanuel's team integrated IBM iSeries systems with modern CI/CD pipelines using Ansible. Emanuel, take us through Hidra."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 16 — Problem Hidra
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Hidra &middot; iSeries &middot; Problem</p>
+    <h2>Overcoming High Costs and Steep Learning Curves</h2>
+    <ul>
+      <li class="fragment"><strong>Legacy application</strong> for iSeries development</li>
+      <li class="fragment">High <strong>licensing and support costs</strong></li>
+      <li class="fragment">Inefficient workflows with <strong>long execution times</strong></li>
+      <li class="fragment">Reliance on <strong>overly complex tools</strong></li>
+      <li class="fragment"><strong>Steep learning curve</strong> &mdash; small specialist bottleneck</li>
+    </ul>
+
+    <aside class="notes">
+      [Emanuel, ~1.5 min]
+
+      "Most people think mainframes can't be automated. We proved that wrong.
+
+      We had a legacy application called Hidra for iSeries development. High licensing and support costs. Workflows were inefficient with long execution times. The tools were overly complex, and the learning curve was steep -- which meant only a small group of specialists could work on it.
+
+      We needed to modernize without disrupting production."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 17 — Hidra Success
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Hidra &middot; iSeries &middot; Success</p>
+    <h2>Modernizing iSeries Through Skill Standardization</h2>
+    <ul>
+      <li><strong>Ansible-based development</strong> replacing legacy tools</li>
+      <li>Resource and <strong>time optimization</strong></li>
+      <li><strong>Standardization</strong> of automation workflows</li>
+      <li><strong>Licensing optimization</strong></li>
+      <li><strong>Rapid team reskilling</strong> &mdash; same Ansible skills, new domain</li>
+    </ul>
+
+    <aside class="notes">
+      [Emanuel, ~1.5 min]
+
+      "We replaced the legacy approach with Ansible-based development.
+
+      Resource and time optimization -- doing more with less. Standardization of automation workflows across the iSeries environment -- using the same flows for different or similar cases. Licensing optimization by replacing expensive legacy tools. And rapid team reskilling -- because Ansible is the same language they use everywhere else.
+
+      That last point is critical. We didn't need iSeries specialists to learn a new tool. We brought the same Ansible skills the rest of the organization already had."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 18 — Hidra Achievements
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Hidra &middot; iSeries &middot; Achievements</p>
+    <h2>Delivery Speed and Financial Impact</h2>
+    <div class="metrics">
+      <div class="metric fragment"><div class="value">60%</div><div class="label">Delivery Speed<br>reduction in time to market</div></div>
+      <div class="metric gold fragment"><div class="value">$1.1M+</div><div class="label">Financial Impact<br>estimated annual savings</div></div>
+      <div class="metric green fragment"><div class="value">30%</div><div class="label">Operational Efficiency<br>additional annual capacity</div></div>
+    </div>
+
+    <aside class="notes">
+      [Emanuel, ~1 min]
+
+      "60% reduction in time to market. That's the headline.
+
+      Over 1.1 million dollars in estimated annual savings from licensing and efficiency gains. And 30% additional annual capacity for the development teams -- meaning they can take on more work without adding headcount.
+
+      Same platform, same standards -- a domain nobody expected Ansible could handle."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 19 — What's Next
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Takeaways</p>
+    <h2>What's Next &mdash; Across All Domains</h2>
+    <div style="display: flex; gap: 30px;">
+      <div class="whats-next-group" style="flex: 1;">
+        <h3>VulSolver</h3>
+        <ul>
+          <li>Configuration Drift Detection &amp; Remediation</li>
+          <li>CIS Compliance Automation</li>
+          <li>OS Baseline Compliance &amp; Enforcement</li>
+          <li>AI-Generated Security Best Practices</li>
+        </ul>
+      </div>
+      <div class="whats-next-group" style="flex: 1;">
+        <h3>Database &amp; Cloud</h3>
+        <ul>
+          <li>Audit &amp; Traceability of DB Users on EC2</li>
+          <li>Issue Remediation through VulSolver</li>
+          <li>AI-Powered Best Practice Recommendations</li>
+        </ul>
+      </div>
+      <div class="whats-next-group" style="flex: 1;">
+        <h3>Hidra (iSeries)</h3>
+        <ul>
+          <li>Automated &amp; Reliable Rollback</li>
+          <li>Decoupling Azure from Automation</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~1 min]
+
+      "Before I share the patterns, let me give you a quick look at what's coming next across all three domains. You'll notice a common thread -- automation never ends, there's always something to improve.
+
+      On the security side, VulSolver is expanding into configuration drift detection, CIS compliance automation, and AI-generated security best practices.
+
+      For databases, the team is building audit and traceability capabilities, and integrating database issue remediation directly into the VulSolver framework.
+
+      And on iSeries, the focus is automated rollback for applications and decoupling from Azure DevOps to give the team more flexibility.
+
+      The pattern is clear: once automation proves value in one domain, it naturally expands to adjacent challenges."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 20 — Pattern Blueprint
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Takeaways</p>
+    <h2>The Pattern + Your Blueprint</h2>
+    <div class="two-col">
+      <div class="col">
+        <h3>What Worked</h3>
+        <ul>
+          <li class="fragment"><strong>1. Community of Practice</strong><br><small>Open, cross-functional, voluntary</small></li>
+          <li class="fragment"><strong>2. Governance Model</strong><br><small>Standards, lifecycle, code review</small></li>
+          <li class="fragment"><strong>3. Platform Thinking</strong><br><small>One platform, many domains</small></li>
+          <li class="fragment"><strong>4. Developer Experience</strong><br><small>Ansible DevTools, VS Code, Dev Spaces</small></li>
+          <li class="fragment"><strong>5. Tactical &rarr; Proactive</strong><br><small>Start simple, evolve to automated</small></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Start Monday Morning</h3>
+        <ul>
+          <li class="fragment"><strong>1. Start a CoP</strong><br><small>Open membership, cross-team</small></li>
+          <li class="fragment"><strong>2. Pick 1 high-impact use case</strong><br><small>Patching, compliance, or config mgmt</small></li>
+          <li class="fragment"><strong>3. Establish standards early</strong><br><small>Naming, structure, review process</small></li>
+          <li class="fragment"><strong>4. Move to proactive</strong><br><small>Connect to monitoring, automate responses</small></li>
+          <li class="fragment"><strong>5. Expand across domains</strong><br><small>Proven pattern &rarr; new teams</small></li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~3 min]
+
+      "So you've just seen three very different use cases -- security remediation, database orchestration, and mainframe integration. Different domains, different teams, different challenges.
+
+      But if you look underneath, there's a pattern. Five things made all of this work:
+
+      First -- the Community of Practice. Open participation, cross-functional. The security team, the database team, the mainframe team -- they're not working in isolation.
+
+      Second -- a governance model. Standards early: naming conventions, code structure, security practices, lifecycle management.
+
+      Third -- platform thinking. One automation platform across all domains. The same Ansible Automation Platform that remediates CVEs also manages iSeries releases.
+
+      Fourth -- developer experience. Ansible DevTools for linting and validation, VS Code with the Ansible extension, and Dev Spaces for consistent environments.
+
+      And fifth -- they started tactical and evolved to proactive. They didn't try to build VulSolver on day one. They started with patching and hardening, proved the value, then expanded to automated remediation across platforms.
+
+      On the right side, here's how you start on Monday morning. Red Hat has recommended practices you can use as a base for standards. That's exactly what Bancolombia did -- they actually started with iSeries, then expanded to security remediation with VulSolver, then databases. The same platform, the same standards, new teams."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 21 — DevEx Resources
+       ============================================================ -->
+  <section class="slide-content">
+
+    <p class="section-label">Takeaways</p>
+    <h2>Developer Experience + Resources</h2>
+    <div class="two-col">
+      <div class="col">
+        <h3>Developer Experience</h3>
+        <ul>
+          <li><strong>Ansible DevTools</strong><br><small>Linting, testing, validation</small></li>
+          <li><strong>VS Code + Ansible Extension</strong><br><small>Consistent dev environment for all teams</small></li>
+          <li><strong>Dev Spaces</strong><br><small>Same tools, same linting, from day one</small></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Resources</h3>
+        <ul>
+          <li><strong>Automation Strategy Guide</strong><br><small>Build your business case and roadmap</small></li>
+          <li><strong>Automation Adoption Guide</strong><br><small>Maturity model walkthrough</small></li>
+          <li><strong>Ansible DevTools Docs</strong><br><small>Documentation and getting started</small></li>
+          <li><strong>Ansible Automation Platform</strong><br><small>Getting started and documentation</small></li>
+        </ul>
+        <p style="font-size: 0.6em; color: var(--rh-gray); margin-top: 0.5em;">
+          [Add QR codes for each resource]
+        </p>
+      </div>
+    </div>
+
+    <aside class="notes">
+      [Leonardo, ~1.5 min]
+
+      "One more thing I want to highlight -- developer experience matters. If it's hard for new people to start writing automation, they won't.
+
+      Bancolombia standardized on VS Code with the Ansible extension and Dev Spaces. Every new automation developer gets the same environment, the same tools, the same linting rules from day one.
+
+      On the right side we have some resources for you. The automation strategy guide will help you build your business case. The adoption guide walks you through the maturity model. And we have documentation on DevTools and Ansible Automation Platform to get you started.
+
+      Scan these now or take a photo -- they'll also be available in the session materials."
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 22 — Thank You
+       ============================================================ -->
+  <section class="slide-thankyou">
+
+    <h1>Thank You</h1>
+    <div class="speaker-grid">
+      <div class="speaker">
+        <div class="avatar rh">LG</div>
+        <div class="name">Leonardo Gallego</div>
+        <div class="role">Senior Technical Marketing Manager<br>Red Hat</div>
+      </div>
+      <div class="speaker">
+        <div class="avatar bc">JE</div>
+        <div class="name">Juan Esteban</div>
+        <div class="role">Bancolombia</div>
+      </div>
+      <div class="speaker">
+        <div class="avatar bc">JD</div>
+        <div class="name">Juan David</div>
+        <div class="role">Bancolombia</div>
+      </div>
+      <div class="speaker">
+        <div class="avatar bc">E</div>
+        <div class="name">Emanuel</div>
+        <div class="role">Bancolombia</div>
+      </div>
+    </div>
+    <div class="qna">Q&amp;A</div>
+
+    <aside class="notes">
+      [Leonardo, ~0.5 min + 5 min Q&amp;A]
+
+      "Thank you for joining us today. Thank you Juan Esteban, Juan David, and Emanuel for sharing Bancolombia's story.
+
+      The key message is simple: you can do this too. Start with a community, pick a use case, establish standards, and grow from there. The technology is ready. The patterns are proven.
+
+      We have about five minutes for questions. Who wants to go first?"
+    </aside>
+  </section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'slide',
+    backgroundTransition: 'none',
+    slideNumber: 'c/t',
+    pdfSeparateFragments: false,
+    width: 1280,
+    height: 720,
+    plugins: [ RevealNotes, RevealHighlight ]
+  });
+</script>
+
+</body>
+</html>
