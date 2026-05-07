@@ -423,6 +423,36 @@
   height: 28px;
 }
 
+/* Flow wrapper for circular loop layout */
+.flow-wrapper {
+  margin: 1.5em 0 0;
+}
+
+.flow-wrapper .flow {
+  margin: 0;
+}
+
+.flow-vertical-connectors {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 6%;
+  height: 48px;
+  align-items: center;
+}
+
+.flow-vertical-connectors .vert-arrow {
+  color: var(--rh-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(25% - 10px);
+}
+
+.flow-vertical-connectors .vert-arrow svg {
+  width: 28px;
+  height: 28px;
+}
+
 /* ================================================================
    TIMELINE
    ================================================================ */
