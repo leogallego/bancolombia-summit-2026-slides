@@ -204,7 +204,8 @@
 .slide-title .speakers {
   font-size: 0.55em;
   color: var(--rh-gray);
-  margin-top: 1.5em;
+  margin-top: 2.5em;
+  line-height: 1.8;
 }
 
 .slide-title .speakers strong {
