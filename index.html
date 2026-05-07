@@ -455,34 +455,34 @@
     <p class="section-label">Database &amp; Cloud &middot; Success</p>
     <h2>Continuous Discovery and CMDB Integration</h2>
     <ul>
-      <li><strong>Database Inventory Management</strong> using AWS and Ansible</li>
-      <li><strong>24/7 discovery playbooks</strong> scanning AWS EC2 infrastructure continuously</li>
-      <li>Detect DB services: <strong>Oracle, MS SQL Server, PostgreSQL</strong> and others across multiple OSes</li>
-      <li><strong>Automated playbooks</strong> for database tagging and validation</li>
+      <li><strong>Dynamic inventories</strong> and scheduled API queries scan all EC2 instances</li>
+      <li>Detect DB services: <strong>Oracle, MS SQL Server, PostgreSQL</strong> and others across Linux &amp; Windows</li>
+      <li><strong>Auto-tagging</strong> with <code>dbservice=true</code> via cross-cutting role enables grouping</li>
+      <li>Positives registered in <strong>BMC Helix</strong> under EC2 category</li>
     </ul>
     <div class="flow" style="margin-top: 1em;">
       <div class="step">
         <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12a10 10 0 11-5-8.66"/><circle cx="12" cy="12" r="3"/><path d="M17 3l2 2-2 2"/></svg>
         <span class="step-label">AWS EC2</span>
-        <small>24/7 instance scanning</small>
-      </div>
-      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
-      <div class="step">
-        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
-        <span class="step-label">AAP Workflow</span>
-        <small>Tag validation</small>
+        <small>Dynamic inventory scanning</small>
       </div>
       <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
       <div class="step">
         <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M20 5v6c0 1.66-3.58 3-8 3s-8-1.34-8-3V5"/><path d="M20 11v6c0 1.66-3.58 3-8 3s-8-1.34-8-3v-6"/></svg>
         <span class="step-label">DB Discovery</span>
-        <small>Oracle, MS SQL Server, others</small>
+        <small>Validate services via API</small>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="step">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        <span class="step-label">EC2 Tagging</span>
+        <small>dbservice=true &middot; cross-cutting role</small>
       </div>
       <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
       <div class="step">
         <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg>
         <span class="step-label">BMC Helix</span>
-        <small>CMDB sync</small>
+        <small>Register in EC2 category</small>
       </div>
     </div>
 
@@ -491,9 +491,11 @@
 
       "The use case we implemented in Ansible runs on an automatic schedule -- several times a day, every day of the week.
 
-      The playbooks traverse all EC2 instances in AWS using dynamic inventories, searching for database services -- Oracle, MS SQL Server, PostgreSQL, and others -- running across both Linux and Windows hosts. After this traversal, each instance is categorized depending on the database engine and tagged to identify it more easily in our team's inventories.
+      Through dynamic inventories and scheduled API queries, the playbooks traverse all EC2 instances in the Bancolombia AWS environment, validating database services by passing IPs dynamically through the Ansible API. When a validation is positive -- meaning a database service is found -- the playbook tags the EC2 instance with a 'dbservice' label set to true. This uses a cross-cutting role we built for tagging across different use cases.
 
-      The same platform, the same standards -- completely different domain."
+      That tag is the key. It lets us group all database EC2 instances together and kick off additional processes -- like retrieving engine versions, user permissions, and support extension status. The positive results are then registered in BMC Helix under the EC2 category, complementing the CMDB with accurate, up-to-date database information.
+
+      We detect Oracle, MS SQL Server, PostgreSQL, and other engines across both Linux and Windows hosts. The same platform, the same standards -- completely different domain."
     </aside>
   </section>
 
